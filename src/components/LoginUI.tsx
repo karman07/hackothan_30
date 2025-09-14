@@ -9,7 +9,7 @@ interface LoginUIProps {
   demoPassword?: string;
 }
 
-const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '', demoEmail, demoPassword }) => {
+const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = ''}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
