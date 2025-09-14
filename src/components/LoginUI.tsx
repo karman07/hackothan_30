@@ -3,11 +3,13 @@ import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import { LoginFormData } from '../types/auth';
 
 interface LoginUIProps {
-  onLogin?: (data: LoginFormData) => void;
+  onLogin?: (data: LoginFormData) => Promise<string | undefined>;
   className?: string;
+  demoEmail?: string;
+  demoPassword?: string;
 }
 
-const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '' }) => {
+const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '', demoEmail, demoPassword }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -16,19 +18,16 @@ const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '' }) => {
 
   const handleSubmit = async (): Promise<void> => {
     setError('');
-    
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
-
     setIsLoading(true);
-    
     try {
       const formData: LoginFormData = { email, password };
-      
       if (onLogin) {
-        await onLogin(formData);
+        const result = await onLogin(formData);
+        if (result) setError(result);
       } else {
         console.log('Login attempt:', formData);
       }
@@ -39,6 +38,7 @@ const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '' }) => {
       setIsLoading(false);
     }
   };
+
 
   const handleKeyPress = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter' && !isLoading) {
@@ -139,7 +139,7 @@ const LoginUI: React.FC<LoginUIProps> = ({ onLogin, className = '' }) => {
                   'Sign In'
                 )}
               </button>
-    
+  
             </div>
           </div>
         </div>
