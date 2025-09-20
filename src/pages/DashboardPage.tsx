@@ -1,3 +1,4 @@
+// src/pages/DashboardPage.tsx
 import React, { useEffect, useState, useRef } from 'react';
 import { Search, Plus, Edit2, Trash2, User as UserIcon, GraduationCap, Calendar, MapPin, Upload, FileText, File } from 'lucide-react';
 
